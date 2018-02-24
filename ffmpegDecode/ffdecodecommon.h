@@ -22,7 +22,6 @@ extern "C" {
 
 #include "inttypes.h"
 
-#define PIC_SIZE_RGB32_1080P 1920 * 1080 * 4
 
 #define SAFE_FREE(p) do \
 {\

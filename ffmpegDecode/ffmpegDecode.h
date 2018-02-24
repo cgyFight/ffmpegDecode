@@ -16,10 +16,11 @@ public:
 	void getYUV420data(char **outData, int *size);
 	bool getRGB32data(char **outData, int *size);
 
+private:
 	//默认大小是1920 * 1080p的大小，如果需要改变的话调用以下函数
 	void changeYUV420BufSize(size_t size); 
 	void changeRGB32BufSize(size_t size); 
-private:
+
 	AVCodec *codec;
 	AVCodecParserContext *parser;
 	AVCodecContext *c;
@@ -28,5 +29,7 @@ private:
 
 	char *yuv420buf;
 	char *rgb32buf;
+	unsigned int yuv420bufSize;
+	unsigned int rgb32bufSize;
 };
 #endif

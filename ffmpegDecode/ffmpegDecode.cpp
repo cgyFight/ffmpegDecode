@@ -3,8 +3,10 @@
 
 CffmpegDecode::CffmpegDecode()
 {
-	yuv420buf = (char *)malloc(PIC_SIZE_RGB32_1080P);
-	rgb32buf = (char *)malloc(PIC_SIZE_RGB32_1080P);
+	yuv420bufSize = 1920 * 1080 * 4;
+	rgb32bufSize = 1920 * 1080 * 4;
+	yuv420buf = (char *)malloc(yuv420bufSize);
+	rgb32buf = (char *)malloc(rgb32bufSize);
 	return;
 }
 
@@ -82,6 +84,9 @@ void CffmpegDecode::getYUV420data(char **outData, int *size)
 {
 	*size = c->width * c->height * 3 / 2;
 
+	if (*size > yuv420bufSize) {
+		changeYUV420BufSize(*size);
+	}
 	int i = 0;
 	int p = 0;
 	for(i=0; i<c->height; i++)   
@@ -124,6 +129,11 @@ bool CffmpegDecode::getRGB32data(char **outData, int *size)
 	ret = sws_scale(swsctx,  frame->data, frame->linesize, 0,c->height,dst_data, dst_linesize);
 
 	*size = c->height * c->width * 4;
+
+
+	if (*size > rgb32bufSize) {
+		changeRGB32BufSize(*size);
+	}
 
 	memcpy(rgb32buf, dst_data[0], *size);
 
