@@ -87,6 +87,7 @@ void CffmpegDecode::getYUV420data(char **outData, int *size)
 	if (*size > yuv420bufSize) {
 		changeYUV420BufSize(*size);
 	}
+
 	int i = 0;
 	int p = 0;
 	for(i=0; i<c->height; i++)   
